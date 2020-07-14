@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await ScanFlutterIos.platformVersion, '42');
+    expect(await ScanFlutterIos.scan(), '42');
   });
 }
