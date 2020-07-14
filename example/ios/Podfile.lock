@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - scan_flutter_ios (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - scan_flutter_ios (from `.symlinks/plugins/scan_flutter_ios/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  scan_flutter_ios:
+    :path: ".symlinks/plugins/scan_flutter_ios/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  scan_flutter_ios: 863083859e7f8a0acff915ab756942b37af1f2e2
+
+PODFILE CHECKSUM: f32fb4e7c14f8b3ca19a369d7be425dd9241af27
+
+COCOAPODS: 1.9.1
