@@ -3,12 +3,10 @@
 A new flutter plugin project.
 
 ## Getting Started
+flutter 扫码插件，只针对 iOS
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+扫码或者从相册选择二维码，返回识别的字符串
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+[插件地址](https://pub.dev/packages/scan_flutter_ios)
+
+![demo](./readme-images/demo.png)

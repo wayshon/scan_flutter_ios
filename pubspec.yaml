@@ -1,8 +1,8 @@
 name: scan_flutter_ios
 description: A new flutter plugin project.
 version: 0.0.1
-author:
-homepage:
+author: wayshon
+homepage: https://github.com/wayshon/scan_flutter_ios
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

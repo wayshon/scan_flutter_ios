@@ -1,3 +1,3 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* 扫码或者从相册选择二维码，返回识别的字符串
