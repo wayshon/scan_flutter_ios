@@ -2,10 +2,16 @@ PODS:
   - Flutter (1.0.0)
   - scan_flutter_ios (0.0.1):
     - Flutter
+  - SGQRCode (3.0.1)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - scan_flutter_ios (from `.symlinks/plugins/scan_flutter_ios/ios`)
+  - SGQRCode (~> 3.0.1)
+
+SPEC REPOS:
+  trunk:
+    - SGQRCode
 
 EXTERNAL SOURCES:
   Flutter:
@@ -16,7 +22,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   scan_flutter_ios: 863083859e7f8a0acff915ab756942b37af1f2e2
+  SGQRCode: bf02d60e18d6660a9d75ff1c8b9b467f064f054e
 
-PODFILE CHECKSUM: f32fb4e7c14f8b3ca19a369d7be425dd9241af27
+PODFILE CHECKSUM: 14c81084218985d5ffc1a95a544535c33a8e7eb0
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.9.1
