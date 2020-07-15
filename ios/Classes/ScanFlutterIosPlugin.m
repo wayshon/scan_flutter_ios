@@ -13,9 +13,9 @@
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
   if ([@"scan" isEqualToString:call.method]) {
       UIViewController *currentVC = [self getCurrentVC];
-      ScanViewController *scanVC = [ScanViewController new];
+      ScanViewController *scanVC = [[ScanViewController alloc] initWithFlutterResult:result];
       [currentVC presentViewController:scanVC animated:YES completion:^() {
-          result(@"show sacn vc");
+//          result(@"show sacn vc");
       }];
   } else {
     result(FlutterMethodNotImplemented);

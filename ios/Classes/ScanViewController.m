@@ -19,9 +19,18 @@
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UIButton *albumBtn;
 @property (nonatomic, strong) UIButton *cancelBtn;
+@property FlutterResult flutterResult;
 @end
 
 @implementation ScanViewController
+
+- (instancetype)initWithFlutterResult:(FlutterResult)result {
+    self = [super init];
+    if (self) {
+        self.flutterResult = result;
+    }
+    return self;
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -72,7 +81,12 @@
         if (result) {
             [obtain stopRunning];
             [obtain playSoundName:@"SGQRCode.bundle/sound.caf"];
-            [MBProgressHUD SG_showMBProgressHUDWithOnlyMessage:result delayTime:10];
+            if (weakSelf.flutterResult) {
+                weakSelf.flutterResult(result);
+                [weakSelf close];
+            } else {
+                [MBProgressHUD SG_showMBProgressHUDWithOnlyMessage:result delayTime:5];
+            }
         }
     }];
     [obtain setBlockWithQRCodeObtainScanBrightness:^(SGQRCodeObtain *obtain, CGFloat brightness) {
@@ -86,7 +100,7 @@
     }];
 }
 
-- (void)rightBarButtonItenAction {
+- (void)openAlbum {
     __weak typeof(self) weakSelf = self;
     
     [obtain establishAuthorizationQRCodeObtainAlbumWithController:nil];
@@ -94,7 +108,8 @@
         [self.scanView removeTimer];
     }
     [obtain setBlockWithQRCodeObtainAlbumDidCancelImagePickerController:^(SGQRCodeObtain *obtain) {
-        [weakSelf.view addSubview:weakSelf.scanView];
+//        [weakSelf.view addSubview:weakSelf.scanView];
+        [weakSelf.scanView addTimer];
     }];
     [obtain setBlockWithQRCodeObtainAlbumResult:^(SGQRCodeObtain *obtain, NSString *result) {
         if (result == nil) {
@@ -103,7 +118,12 @@
                 [MBProgressHUD SG_showMBProgressHUDWithOnlyMessage:@"未发现二维码/条形码" delayTime:1.0];
             });
         } else {
-            [MBProgressHUD SG_showMBProgressHUDWithOnlyMessage:result delayTime:10];
+            if (weakSelf.flutterResult) {
+                weakSelf.flutterResult(result);
+                [weakSelf close];
+            } else {
+                [MBProgressHUD SG_showMBProgressHUDWithOnlyMessage:result delayTime:5];
+            }
         }
     }];
 }
@@ -139,33 +159,33 @@
 
 - (UIButton *)albumBtn {
     if (!_albumBtn) {
-        CGFloat albumBtnX = self.view.frame.size.width - 80;
-        CGFloat albumBtnY = 10;
-        CGFloat albumBtnW = 60;
-        CGFloat albumBtnH = 30;
-        _albumBtn = [[UIButton alloc]initWithFrame:CGRectMake(albumBtnX, albumBtnY, albumBtnW, albumBtnH)];
+        CGFloat btnX = self.view.frame.size.width - 80;
+        CGFloat btnY = 10;
+        CGFloat btnW = 60;
+        CGFloat btnH = 30;
+        _albumBtn = [[UIButton alloc]initWithFrame:CGRectMake(btnX, btnY, btnW, btnH)];
         _albumBtn.backgroundColor = [UIColor clearColor];
         [_albumBtn setTitle:@"相册" forState:UIControlStateNormal];
-        [_albumBtn addTarget:self action:@selector(rightBarButtonItenAction) forControlEvents:UIControlEventTouchUpInside];
+        [_albumBtn addTarget:self action:@selector(openAlbum) forControlEvents:UIControlEventTouchUpInside];
     }
     return _albumBtn;
 }
 
 - (UIButton *)cancelBtn {
     if (!_cancelBtn) {
-        CGFloat albumBtnX = 20;
-        CGFloat albumBtnY = 10;
-        CGFloat albumBtnW = 60;
-        CGFloat albumBtnH = 30;
-        _cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(albumBtnX, albumBtnY, albumBtnW, albumBtnH)];
+        CGFloat btnX = 20;
+        CGFloat btnY = 10;
+        CGFloat btnW = 60;
+        CGFloat btnH = 30;
+        _cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(btnX, btnY, btnW, btnH)];
         _cancelBtn.backgroundColor = [UIColor clearColor];
         [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-        [_cancelBtn addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
+        [_cancelBtn addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
     }
     return _cancelBtn;
 }
 
-- (void)cancel {
+- (void)close {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -207,7 +227,7 @@
 
 - (void)removeFlashlightBtn {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [obtain closeFlashlight];
+        [self->obtain closeFlashlight];
         self.isSelectedFlashlightBtn = NO;
         self.flashlightBtn.selected = NO;
         [self.flashlightBtn removeFromSuperview];

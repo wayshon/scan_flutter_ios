@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String _result = '';
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +21,32 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: RaisedButton(
-            child: Text("scan"),
-            onPressed: () async {
-              String platformVersion;
-              try {
-                platformVersion = await ScanFlutterIos.scan();
-              } on PlatformException {
-                platformVersion = 'Failed to get platform version.';
-              }
-              print(platformVersion);
-            },
-          ),
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: Center(
+                child: Text(_result),
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: RaisedButton(
+                  child: Text("scan"),
+                  onPressed: () async {
+                    String result;
+                    try {
+                      result = await ScanFlutterIos.scan();
+                    } on PlatformException {
+                      result = 'Failed to get platform version.';
+                    }
+                    setState(() {
+                      _result = result;
+                    });
+                  },
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
