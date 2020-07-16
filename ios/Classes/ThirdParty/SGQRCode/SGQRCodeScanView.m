@@ -275,21 +275,35 @@
     if (!_scanningline) {
         _scanningline = [[UIImageView alloc] init];
         
-        /// 静态库 url 的获取
-        NSURL *url = [[NSBundle mainBundle] URLForResource:@"SGQRCode" withExtension:@"bundle"];
-        if (!url) {
-            /// 动态库 url 的获取
-            url = [[NSBundle bundleForClass:[self class]] URLForResource:@"SGQRCode" withExtension:@"bundle"];
-        }
-        NSBundle *bundle = [NSBundle bundleWithURL:url];
+//        /// 静态库 url 的获取
+//        NSURL *url = [[NSBundle mainBundle] URLForResource:@"Classes" withExtension:@"bundle"];
+//        if (!url) {
+//            /// 动态库 url 的获取
+//            url = [[NSBundle bundleForClass:[self class]] URLForResource:@"SGQRCode" withExtension:@"bundle"];
+//        }
+//        NSBundle *bundle = [NSBundle bundleWithURL:url];
+//
+//        UIImage *image = [UIImage imageNamed:self.scanImageName inBundle:bundle compatibleWithTraitCollection:nil];
+//        if (!image) {
+//            image = [UIImage imageNamed:self.scanImageName];
+//        }
         
-        UIImage *image = [UIImage imageNamed:self.scanImageName inBundle:bundle compatibleWithTraitCollection:nil];
-        if (!image) {
-            image = [UIImage imageNamed:self.scanImageName];
-        }
-        _scanningline.image = image;
+        _scanningline.image = [UIImage imageWithData:[self getImageData]];
     }
     return _scanningline;
+}
+
+- (NSData *)getImageData {
+    NSString *dataKey = @"scanImage";
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    NSData *data = [defaults dataForKey:dataKey];
+    if (!data) {
+        NSString *imgUrl = @"https://calcbit.com/resource/flutter-scan/QRCodeScanLine.png";
+        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgUrl]];
+        [defaults setObject:data forKey:dataKey];
+        [defaults synchronize];
+    }
+    return data;
 }
 
 #pragma mark - - - set

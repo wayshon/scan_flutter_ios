@@ -232,18 +232,23 @@
 
 - (void)playSoundName:(NSString *)name {
     /// 静态库 path 的获取
-    NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:nil];
-    if (!path) {
-        /// 动态库 path 的获取
-        path = [[NSBundle bundleForClass:[self class]] pathForResource:name ofType:nil];
-    }
-    NSURL *fileUrl = [NSURL fileURLWithPath:path];
+//    NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:nil];
+//    if (!path) {
+//        /// 动态库 path 的获取
+//        path = [[NSBundle bundleForClass:[self class]] pathForResource:name ofType:nil];
+//    }
+//    NSURL *fileUrl = [NSURL fileURLWithPath:path];
+//
+//    NSURL *fileUrl = [self getAudioData];
+//
+//    SystemSoundID soundID = 0;
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &soundID);
+//    AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, soundCompleteCallback, NULL);
+//    AudioServicesPlaySystemSound(soundID);
     
-    SystemSoundID soundID = 0;
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &soundID);
-    AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, soundCompleteCallback, NULL);
-    AudioServicesPlaySystemSound(soundID);
+    AudioServicesPlaySystemSound(1118);
 }
+
 void soundCompleteCallback(SystemSoundID soundID, void *clientData){
     
 }
