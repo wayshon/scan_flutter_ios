@@ -9,4 +9,9 @@ class ScanFlutterIos {
     final String result = await _channel.invokeMethod('scan');
     return result;
   }
+
+  static Future<bool> share(param) async {
+    final bool success = await _channel.invokeMethod('share', param);
+    return success;
+  }
 }

@@ -6,6 +6,8 @@
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"scan_flutter_ios"
             binaryMessenger:[registrar messenger]];
+    
+    [channel invokeMethod:@"sd" arguments:@[]];
   ScanFlutterIosPlugin* instance = [[ScanFlutterIosPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 }
@@ -14,12 +16,47 @@
   if ([@"scan" isEqualToString:call.method]) {
       UIViewController *currentVC = [self getCurrentVC];
       ScanViewController *scanVC = [[ScanViewController alloc] initWithFlutterResult:result];
-      [currentVC presentViewController:scanVC animated:YES completion:^() {
-//          result(@"show sacn vc");
-      }];
+      [currentVC presentViewController:scanVC animated:YES completion:^() {}];
+  } else if ([@"share" isEqualToString:call.method]) {
+       [self share:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
+}
+
+- (void)share: (FlutterMethodCall*)call result:(FlutterResult)result {
+    NSDictionary *param = [call.arguments objectAtIndex:0];
+    NSString *textToShare = [param objectForKey:@"text"];
+    NSString *urlString = [param objectForKey:@"url"];
+    NSString *imageUrlString = [param objectForKey:@"imageUrl"];
+    
+    NSMutableArray *activityItems = [NSMutableArray new];
+    
+    if (textToShare != nil) {
+        [activityItems addObject:textToShare];
+    }
+    
+    if (urlString != nil) {
+        NSURL *urlToShare = [NSURL URLWithString:urlString];
+        [activityItems addObject:urlToShare];
+    }
+    
+    if (imageUrlString != nil) {
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlString]];
+        UIImage *imageToShare = [UIImage imageWithData:data];
+        [activityItems addObject:imageToShare];
+    }
+    
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
+    activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypeSaveToCameraRoll];
+    [[self getCurrentVC] presentViewController:activityVC animated:YES completion:nil];
+    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        if (completed) {
+            result(@(YES));
+        } else  {
+            result(@(NO));
+        }
+    };
 }
 
 - (UIViewController *)getCurrentVC {

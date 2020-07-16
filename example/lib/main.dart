@@ -45,6 +45,31 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
               ),
+            ),
+            Expanded(
+              child: Center(
+                child: RaisedButton(
+                  child: Text("share"),
+                  onPressed: () async {
+                    bool result;
+                    try {
+                      result = await ScanFlutterIos.share([
+                        {
+                          'text': '哈哈哈哈哈哈哈哈',
+                          'url': 'https://calcbit.com',
+                          'imageUrl':
+                              'https://calcbit.com/resource/doudou/doudou.jpeg'
+                        }
+                      ]);
+                    } on PlatformException {
+                      result = false;
+                    }
+                    setState(() {
+                      _result = result ? '分享成功' : '分享失败';
+                    });
+                  },
+                ),
+              ),
             )
           ],
         ),
