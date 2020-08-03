@@ -52,7 +52,15 @@ dart 与 native channel 通信的值类型是有限制的，具体看官网。�
 
 同上，因为无论是手写的还是导入的文件，我们的 target 都是要设置的 Pods-Runner，如果设置 Flutter 就没这情况了，但这只影响当前的 example，别人安装了还是跑不起来。所以当我们有一些资源比如图片的时候，就不能用 Assets 或者 bundle 文件了，因为不在 Build Phases -> Copy Bundle Resources 里，使用 `[NSBundle mainBundle] URLForResource` 读到的将会是 nil。除非要求使用这个库的人自己去在他们的xcode设置里加上，很不现实。所以我现在把扫码框的横条图片放到的线上，先从线上加载图片成 NSData 存本地，以后都从本地取。
 
-上面两个问题由于才疏学浅不知道怎么搞，尤其是 cocoapods 不能用太坑了，直接规避了 iOS 生态一堆三方库，如果有大佬知道怎么玩，求指点。小弟邮箱: wayshon@qq.com
+上面两个问题由于才疏学浅不知道怎么搞，尤其是 cocoapods 不能用太坑了，直接规避了 iOS 生态一堆三方库，如果有大佬知道怎么玩，求指点。邮箱: wayshon@qq.com
+
+追加！可以通过 .podspec 安装 cocoapods
+
+```
+// ./ios/scan_flutter_ios.podspec
+s.dependency 'SGQRCode', '3.0.1'
+s.dependency 'MBProgressHUD', '1.2.0'
+```
 
 ### 编辑 dart 代码
 

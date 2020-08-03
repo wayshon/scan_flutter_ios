@@ -1,11 +1,20 @@
 PODS:
   - Flutter (1.0.0)
-  - scan_flutter_ios (0.0.1):
+  - MBProgressHUD (1.2.0)
+  - scan_flutter_ios (0.0.5):
     - Flutter
+    - MBProgressHUD (= 1.2.0)
+    - SGQRCode (= 3.0.1)
+  - SGQRCode (3.0.1)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - scan_flutter_ios (from `.symlinks/plugins/scan_flutter_ios/ios`)
+
+SPEC REPOS:
+  trunk:
+    - MBProgressHUD
+    - SGQRCode
 
 EXTERNAL SOURCES:
   Flutter:
@@ -15,7 +24,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  scan_flutter_ios: 863083859e7f8a0acff915ab756942b37af1f2e2
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  scan_flutter_ios: e0756cfa07d3dcb1acdd15d465e7fc8ddd587da0
+  SGQRCode: bf02d60e18d6660a9d75ff1c8b9b467f064f054e
 
 PODFILE CHECKSUM: 4eb9825178ac52361ae0ccf0356343050aed8af5
 

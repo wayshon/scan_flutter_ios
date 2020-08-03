@@ -7,7 +7,7 @@
 
 #import "ScanViewController.h"
 #import "SGQRCode.h"
-#import "MBProgressHUD+SGQRCode.h"
+#import "MBProgressHUD.h"
 
 @interface ScanViewController () {
     SGQRCodeObtain *obtain;
@@ -85,7 +85,7 @@
                 weakSelf.flutterResult(result);
                 [weakSelf close];
             } else {
-                [MBProgressHUD SG_showMBProgressHUDWithOnlyMessage:result delayTime:5];
+                [weakSelf showMessageWithTitle: result];
             }
         }
     }];
@@ -115,14 +115,14 @@
         if (result == nil) {
             NSLog(@"暂未识别出二维码");
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [MBProgressHUD SG_showMBProgressHUDWithOnlyMessage:@"未发现二维码/条形码" delayTime:1.0];
+                [weakSelf showMessageWithTitle: @"未发现二维码/条形码"];
             });
         } else {
             if (weakSelf.flutterResult) {
                 weakSelf.flutterResult(result);
                 [weakSelf close];
             } else {
-                [MBProgressHUD SG_showMBProgressHUDWithOnlyMessage:result delayTime:5];
+                [weakSelf showMessageWithTitle: result];
             }
         }
     }];
@@ -231,6 +231,19 @@
         self.isSelectedFlashlightBtn = NO;
         self.flashlightBtn.selected = NO;
         [self.flashlightBtn removeFromSuperview];
+    });
+}
+
+- (void)showMessageWithTitle:(NSString *)title
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+    MBProgressHUD *progressView = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    progressView.bezelView.color = [UIColor darkGrayColor];
+    progressView.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    progressView.contentColor = [UIColor whiteColor];
+    progressView.mode = MBProgressHUDModeText;
+    progressView.detailsLabel.text = title;
+    [progressView hideAnimated:YES afterDelay:3];
     });
 }
 
