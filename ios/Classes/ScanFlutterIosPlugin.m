@@ -27,7 +27,7 @@
       }
       NSBundle *bundle = [NSBundle bundleWithURL:url];
       
-      UIImage *image = [UIImage imageNamed:@"doudou" inBundle:bundle compatibleWithTraitCollection:nil];
+      UIImage *image = [UIImage imageWithContentsOfFile:[bundle pathForResource:@"doudou" ofType:@"jpeg"]];
       NSLog(@"%@", image);
       
   } else {

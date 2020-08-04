@@ -17,3 +17,7 @@
 ## 0.0.5
 
 * 删除项目里的第三方库代码，使用 .podspec 安装 cocoapods
+
+## 0.0.5
+
+* 使用 .podspec 安装 添加 bundle

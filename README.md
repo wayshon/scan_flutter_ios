@@ -54,12 +54,15 @@ dart 与 native channel 通信的值类型是有限制的，具体看官网。�
 
 上面两个问题由于才疏学浅不知道怎么搞，尤其是 cocoapods 不能用太坑了，直接规避了 iOS 生态一堆三方库，如果有大佬知道怎么玩，求指点。邮箱: wayshon@qq.com
 
-追加！可以通过 .podspec 安装 cocoapods
+##### 追加！解决方案 podspec
+
+可以通过 .podspec 安装 cocoapods 和 添加 bundle
 
 ```
 // ./ios/scan_flutter_ios.podspec
 s.dependency 'SGQRCode', '3.0.1'
 s.dependency 'MBProgressHUD', '1.2.0'
+s.resources = "Classes/scan_flutter_ios.bundle"
 ```
 
 ### 编辑 dart 代码

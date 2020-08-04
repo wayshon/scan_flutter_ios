@@ -1,6 +1,6 @@
 name: scan_flutter_ios
 description: A new flutter plugin project.
-version: 0.0.5
+version: 0.0.6
 author: wayshon
 repository: https://github.com/wayshon/scan_flutter_ios
 homepage: https://pub.dev/packages/scan_flutter_ios
