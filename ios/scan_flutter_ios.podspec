@@ -18,6 +18,7 @@ A new flutter plugin project.
   s.dependency 'Flutter'
   s.dependency 'SGQRCode', '3.0.1'
   s.dependency 'MBProgressHUD', '1.2.0'
+  s.resources = "Classes/scan_flutter_ios.bundle"
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.

@@ -18,7 +18,18 @@
       ScanViewController *scanVC = [[ScanViewController alloc] initWithFlutterResult:result];
       [currentVC presentViewController:scanVC animated:YES completion:^() {}];
   } else if ([@"share" isEqualToString:call.method]) {
-       [self share:call result:result];
+      [self share:call result:result];
+      
+      NSURL *url = [[NSBundle mainBundle] URLForResource:@"scan_flutter_ios" withExtension:@"bundle"];
+      if (!url) {
+          /// 动态库 url 的获取
+          url = [[NSBundle bundleForClass:[self class]] URLForResource:@"scan_flutter_ios" withExtension:@"bundle"];
+      }
+      NSBundle *bundle = [NSBundle bundleWithURL:url];
+      
+      UIImage *image = [UIImage imageNamed:@"doudou" inBundle:bundle compatibleWithTraitCollection:nil];
+      NSLog(@"%@", image);
+      
   } else {
     result(FlutterMethodNotImplemented);
   }
